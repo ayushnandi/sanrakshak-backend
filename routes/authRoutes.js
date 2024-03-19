@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => res.json({ message: "Hello from the auth routes " }))
 
-router.get('/register', register);
+router.post('/register', register);
 router.get('/login', login);
 router.get('/logout', logout);
 
