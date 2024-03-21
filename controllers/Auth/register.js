@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 
 const register = async (req, res, next) => {
   console.log(req.body)
-  const { name, email, password } = req.body;
+  const { name, email, password, role, city } = req.body;
 
   try {
     const existingUser = await User.findOne({ email: email });
@@ -14,13 +14,13 @@ const register = async (req, res, next) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    var role = req?.query?.role;
     const newUser = new User(
       {
         name: name,
         email: email,
         password: hashedPassword,
-        role: role
+        role: role,
+        city: city
       }
     );
     const user = await newUser.save();

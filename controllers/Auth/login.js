@@ -25,16 +25,19 @@ const login = async (req, res, next) => {
     const token = generateAuthToken(existingUser?._id, existingUser?.role); // Replace with actual userId
     console.log("this is token payload ", token);
 
-    const refreshToken = generateRefreshToken(existingUser?._id);
-
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie('accessToken', token, {
       httpOnly: true,
       secure: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days 
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    var redirectParam = req?.query?.redirect;
-    const redirectURL = redirectParam;
+    var redirectParam = req.query.redirect;
+    if (!existingUser.role || existingUser.role.trim() === "") {
+      redirectParam = "/role";
+    } else {
+      redirectParam = `/${existingUser.role}`;
+    }
+    const redirectURL = redirectParam
     const user = existingUser
     return res.json({ success: true, redirectURL, user, token });
 
