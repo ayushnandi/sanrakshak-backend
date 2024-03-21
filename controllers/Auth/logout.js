@@ -6,20 +6,16 @@ config({
 
 const logout = async (req, res, next) => {
   try {
-    const refreshToken = req.cookies.refreshToken;
-    console.log("cookies are:", req.cookies)
-    if (refreshToken) {
-      console.log('Refresh token invalidated:', refreshToken);
-    }
-    res.clearCookie('refreshToken');
-    return res.json({
-      success: true,
-      message: "User logout suceesully",
-      refreshToken
-    });
+    res
+      .status(200)
+      .cookie('accessToken', { expires: new Date(Date.now()) })
+      .json({
+        success: true,
+        message: "User logout suceesully"
+      });
   } catch (error) {
-    return res.status(400).json({ messsage: "User nor logged out", error })
+    res.status(400).json({ messsage: "User nor logged out", error })
   }
 }
 
-export default logout;
+export default logout
