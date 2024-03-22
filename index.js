@@ -15,8 +15,7 @@ app.use(bodyParser.json({ limit: '35mb' }));
 // adding middleware
 app.use(
   cors({
-    origin: ["http://localhost:3000", process.env.Frontend_URL],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
