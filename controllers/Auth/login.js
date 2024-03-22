@@ -30,14 +30,13 @@ const login = async (req, res, next) => {
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days 
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
     var redirectParam = req?.query?.redirect;
     const redirectURL = redirectParam;
-    const user = existingUser
+    const user = existingUser;
     return res.json({ success: true, redirectURL, user, token });
-
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Invalid email or password.' });
   }
